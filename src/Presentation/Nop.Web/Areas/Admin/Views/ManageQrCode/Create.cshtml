@@ -1,0 +1,73 @@
+﻿@model Nop.Web.Areas.Admin.Models.QrCodes.SunworldQrCodeModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Create</h2>
+
+<h4>SunworldQrCodeModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="BarCode" class="control-label"></label>
+                <input asp-for="BarCode" class="form-control" />
+                <span asp-validation-for="BarCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="Used" /> @Html.DisplayNameFor(model => model.Used)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderItemId" class="control-label"></label>
+                <input asp-for="OrderItemId" class="form-control" />
+                <span asp-validation-for="OrderItemId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SunworldProductName" class="control-label"></label>
+                <input asp-for="SunworldProductName" class="form-control" />
+                <span asp-validation-for="SunworldProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransactionFiscal" class="control-label"></label>
+                <input asp-for="TransactionFiscal" class="form-control" />
+                <span asp-validation-for="TransactionFiscal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Transaction" class="control-label"></label>
+                <input asp-for="Transaction" class="form-control" />
+                <span asp-validation-for="Transaction" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransactionTDSSN" class="control-label"></label>
+                <input asp-for="TransactionTDSSN" class="form-control" />
+                <span asp-validation-for="TransactionTDSSN" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -16,6 +16,7 @@ using Nop.Core.Domain.Messages;
 using Nop.Core.Domain.News;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Polls;
+using Nop.Core.Domain.QrCodes;
 using Nop.Core.Domain.Security;
 using Nop.Core.Domain.Seo;
 using Nop.Core.Domain.Shipping;
@@ -50,6 +51,7 @@ using Nop.Web.Areas.Admin.Models.Orders;
 using Nop.Web.Areas.Admin.Models.Payments;
 using Nop.Web.Areas.Admin.Models.Plugins;
 using Nop.Web.Areas.Admin.Models.Polls;
+using Nop.Web.Areas.Admin.Models.QrCodes;
 using Nop.Web.Areas.Admin.Models.Settings;
 using Nop.Web.Areas.Admin.Models.Shipping;
 using Nop.Web.Areas.Admin.Models.ShoppingCart;
@@ -102,6 +104,7 @@ namespace Nop.Web.Areas.Admin.Infrastructure.Mapper
             CreateTopicsMaps();
             CreateVendorsMaps();
             CreateWarehouseMaps();
+            CreateSunworldQrCodeMaps();
 
             //add some generic mapping rules
             ForAllMaps((mapConfiguration, map) =>
@@ -1588,6 +1591,11 @@ namespace Nop.Web.Areas.Admin.Infrastructure.Mapper
                 .ForMember(entity => entity.AddressId, options => options.Ignore());
         }
 
+        protected virtual void CreateSunworldQrCodeMaps()
+        {
+            CreateMap<SunworldQrCode, SunworldQrCodeModel>();
+            CreateMap<SunworldQrCodeModel, SunworldQrCode>();
+        }
         #endregion
 
         #region Properties

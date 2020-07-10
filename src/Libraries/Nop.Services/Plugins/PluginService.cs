@@ -613,6 +613,10 @@ namespace Nop.Services.Plugins
         /// </summary>
         public virtual void UpdatePlugins()
         {
+            //If need update column or add new table need run 2 line code below
+            //var migrationManager = EngineContext.Current.Resolve<IMigrationManager>();
+            //migrationManager.ApplyUpMigrations();
+
             foreach (var installedPlugin in _pluginsInfo.InstalledPlugins)
             {
                 var newVersion = _pluginsInfo.PluginDescriptors.FirstOrDefault(pd =>

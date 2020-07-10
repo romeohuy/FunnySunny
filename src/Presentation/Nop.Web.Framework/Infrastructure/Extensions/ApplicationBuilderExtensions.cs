@@ -17,6 +17,7 @@ using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Security;
 using Nop.Core.Infrastructure;
 using Nop.Data;
+using Nop.Data.Migrations;
 using Nop.Services.Authentication;
 using Nop.Services.Common;
 using Nop.Services.Installation;

@@ -1,0 +1,77 @@
+﻿@using Nop.Services.Helpers
+@model Nop.Web.Areas.Admin.Models.QrCodes.SunworldQrCodeModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SunworldQrCodeModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BarCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BarCode)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Used)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Used)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderItemId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OrderItemId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SunworldProductName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SunworldProductName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionFiscal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TransactionFiscal)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Transaction)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Transaction)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionTDSSN)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TransactionTDSSN)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dd>
+            <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(QrCodeHelper.GenerateQrCodeBytes(Model.BarCode)))" />
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
