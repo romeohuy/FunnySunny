@@ -569,6 +569,9 @@
                                             @T("Order.Product(s).VendorName")
                                         </th>
                                     }
+                                    <th class="a-center qrcode">
+                                        @T("Order.Product(s).QrCode")
+                                    </th>
                                     <th class="a-center price">
                                         @T("Order.Product(s).Price")
                                     </th>
@@ -632,6 +635,15 @@
                                                 <span class="vendor-name">@item.VendorName</span>
                                             </td>
                                         }
+                                        <td class="a-left unit-qrcode">
+                                            
+                                            <span class="product-unit-qrcode">
+                                                @if (item.SunworldQrCode != null)
+                                                {
+                                                    <img width="100px" height="100px" src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(item.SunworldQrCode))" />
+                                                }
+                                            </span>
+                                        </td>
                                         <td class="a-left price prices-alignment-right">
                                             <span class="product-unit-price">@item.UnitPrice</span>
                                         </td>

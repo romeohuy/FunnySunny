@@ -55,5 +55,15 @@ namespace Nop.Services.QrCodes
         {
             throw new NotImplementedException();
         }
-    }
+
+        public SunworldQrCode GetAvaliableSunworldQrCode()
+        {
+            return _sunworldQrCodeRepository.Table.FirstOrDefault(_ => _.Used == false);
+        }
+
+        public SunworldQrCode GetByOrderItemId(int orderItemId)
+        {
+            return _sunworldQrCodeRepository.Table.FirstOrDefault(_ => _.OrderItemId == orderItemId);
+        }
+   }
 }

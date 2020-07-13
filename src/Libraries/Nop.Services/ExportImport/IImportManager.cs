@@ -38,5 +38,6 @@ namespace Nop.Services.ExportImport
         /// </summary>
         /// <param name="stream">Stream</param>
         void ImportCategoriesFromXlsx(Stream stream);
+        void ImportQrCodesFromXlsx(Stream stream);
     }
 }

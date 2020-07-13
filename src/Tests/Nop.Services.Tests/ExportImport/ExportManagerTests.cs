@@ -31,6 +31,7 @@ using Nop.Services.Helpers;
 using Nop.Services.Media;
 using Nop.Services.Messages;
 using Nop.Services.Orders;
+using Nop.Services.QrCodes;
 using Nop.Services.Seo;
 using Nop.Services.Shipping;
 using Nop.Services.Shipping.Date;
@@ -85,6 +86,7 @@ namespace Nop.Services.Tests.ExportImport
         private Mock<IAddressService> _addressService;
         private Mock<ICurrencyService> _currencyService;
         private Mock<IUrlRecordService> _urlRecordService;
+        private Mock<ISunworldQrCodeService> _sunworldQrCodeService;
 
         #endregion
 
@@ -135,7 +137,7 @@ namespace Nop.Services.Tests.ExportImport
 
             _currencyService = new Mock<ICurrencyService>();
             _urlRecordService = new Mock<IUrlRecordService>();
-
+            _sunworldQrCodeService = new Mock<ISunworldQrCodeService>();
             var nopEngine = new Mock<NopEngine>();
 
             var picture = new Picture
@@ -201,7 +203,7 @@ namespace Nop.Services.Tests.ExportImport
                 _urlRecordService.Object,
                 _vendorService.Object,
                 serviceProvider.WorkContext.Object,
-                _orderSettings, _productEditorSettings);
+                _orderSettings, _productEditorSettings, _sunworldQrCodeService.Object);
         }
 
         #endregion

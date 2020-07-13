@@ -2,15 +2,15 @@
 
 @{
     //page title
-    ViewBag.PageTitle = T("Admin.Catalog.Categories.CreateQrCodeDetails").Text;
+    ViewBag.PageTitle = T("Admin.Catalog.Categories.EditQrCodeDetailsDetails").Text;
     Html.SetActiveMenuItemSystemName("ManageQrCode");
 }
+
 <div class="content">
-    
-    <form asp-controller="ManageQrCode" asp-action="Create">
+    <form asp-controller="ManageQrCode" asp-action="Edit">
         <div class="content-header clearfix">
             <h1 class="pull-left">
-                @T("Admin.Catalog.Categories.CreateQrCodeDetails") - @Model.BarCode
+                @T("Admin.Catalog.Categories.EditQrCodeDetailsDetails") - @Model.BarCode
                 <small>
                     <i class="fa fa-arrow-circle-left"></i>
                     <a asp-action="Index">@T("Admin.ManageQrCode.ManageQrCodes.BackToList")</a>

@@ -28,6 +28,7 @@ using Nop.Services.Logging;
 using Nop.Services.Messages;
 using Nop.Services.Orders;
 using Nop.Services.Payments;
+using Nop.Services.QrCodes;
 using Nop.Services.Security;
 using Nop.Services.Shipping;
 using Nop.Services.Shipping.Pickup;
@@ -98,6 +99,7 @@ namespace Nop.Services.Tests.Orders
         private Mock<IAffiliateService> _affiliateService;
         private Mock<IVendorService> _vendorService;
         private Mock<IPdfService> _pdfService;
+        private Mock<ISunworldQrCodeService> _sunworldQrCodeService;
         private Mock<ICustomNumberFormatter> _customNumberFormatter;
         private OrderProcessingService _orderProcessingService;
         private PaymentPluginManager _paymentPluginManager;
@@ -145,7 +147,7 @@ namespace Nop.Services.Tests.Orders
             _pdfService = new Mock<IPdfService>();
             _customNumberFormatter = new Mock<ICustomNumberFormatter>();
             _rewardPointService = new Mock<IRewardPointService>();
-
+            _sunworldQrCodeService = new Mock<ISunworldQrCodeService>();
 
             _workContext = null;
 
@@ -328,7 +330,7 @@ namespace Nop.Services.Tests.Orders
                 _paymentSettings,
                 _rewardPointsSettings,
                 _shippingSettings,
-                _taxSettings);
+                _taxSettings, _sunworldQrCodeService.Object);
         }
 
         [Test]

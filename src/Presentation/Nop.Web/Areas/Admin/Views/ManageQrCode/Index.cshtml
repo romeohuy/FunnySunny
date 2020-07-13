@@ -1,84 +1,152 @@
 ﻿@model IEnumerable<Nop.Web.Areas.Admin.Models.QrCodes.SunworldQrCodeModel>
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.PageTitle = "Manage QR Codes";
 }
 
-<h2>Index</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.BarCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Used)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderItemId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SunworldProductName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TransactionFiscal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Transaction)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TransactionTDSSN)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BarCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Used)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderItemId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SunworldProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TransactionFiscal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Transaction)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TransactionTDSSN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id  }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="content-header clearfix">
+    <h1 class="pull-left">
+        Manage QR Codes
+    </h1>
+    <div class="pull-right">
+        <a asp-action="Create" class="btn bg-blue">
+            <i class="fa fa-plus-square"></i>
+            @T("Admin.Common.AddNew")
+        </a>
+        <button type="button" name="importexcel" class="btn bg-olive" data-toggle="modal" data-target="#importexcel-window">
+            <i class="fa fa-upload"></i>
+            @T("Admin.Common.Import")
+        </button>
+        <a asp-action="ExportXlsx" class="btn bg-blue">
+            <i class="fa fa-file-excel-o"></i>
+            @T("Admin.Common.ExportToExcel")
+        </a>
+        @*<button type="button" id="delete-selected" class="btn bg-red">
+            <i class="fa fa-trash-o"></i>
+            @T("Admin.Common.Delete.Selected")
+        </button>*@
+        @*<nop-action-confirmation asp-button-id="delete-selected" />*@
+    </div>
+</div>
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Id)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.BarCode)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Used)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.OrderItemId)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.SunworldProductName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TransactionFiscal)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Transaction)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.TransactionTDSSN)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Description)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BarCode)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Used)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.OrderItemId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SunworldProductName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TransactionFiscal)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Transaction)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TransactionTDSSN)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*import categories form*@
+<div id="importexcel-window" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="importexcel-window-title">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="importexcel-window-title">@T("Admin.Common.ImportFromExcel")</h4>
+            </div>
+            <form asp-controller="ManageQrCode" asp-action="ImportFromXlsx" method="post" enctype="multipart/form-data">
+                <div class="form-horizontal">
+                    <div class="modal-body">
+                        
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <div class="label-wrapper">
+                                    <label class="control-label">
+                                        @T("Admin.Common.ExcelFile")
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <input type="file" id="importexcelfile" name="importexcelfile" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                            @T("Admin.Common.ImportFromExcel")
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

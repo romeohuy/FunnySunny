@@ -26,6 +26,7 @@ using Nop.Services.Localization;
 using Nop.Services.Logging;
 using Nop.Services.Messages;
 using Nop.Services.Payments;
+using Nop.Services.QrCodes;
 using Nop.Services.Security;
 using Nop.Services.Shipping;
 using Nop.Services.Tax;
@@ -84,6 +85,8 @@ namespace Nop.Services.Orders
         private readonly ShippingSettings _shippingSettings;
         private readonly TaxSettings _taxSettings;
 
+        private readonly ISunworldQrCodeService _sunworldQrCodeService;
+
         #endregion
 
         #region Ctor
@@ -130,7 +133,7 @@ namespace Nop.Services.Orders
             PaymentSettings paymentSettings,
             RewardPointsSettings rewardPointsSettings,
             ShippingSettings shippingSettings,
-            TaxSettings taxSettings)
+            TaxSettings taxSettings, ISunworldQrCodeService sunworldQrCodeService)
         {
             _currencySettings = currencySettings;
             _addressService = addressService;
@@ -175,6 +178,7 @@ namespace Nop.Services.Orders
             _rewardPointsSettings = rewardPointsSettings;
             _shippingSettings = shippingSettings;
             _taxSettings = taxSettings;
+            _sunworldQrCodeService = sunworldQrCodeService;
         }
 
         #endregion
@@ -1334,6 +1338,14 @@ namespace Nop.Services.Orders
 
                 _orderService.InsertOrderItem(orderItem);
 
+                //Add order item to Qrcode
+                var firstQrCode = _sunworldQrCodeService.GetAvaliableSunworldQrCode();
+                if (firstQrCode != null)
+                {
+                    firstQrCode.OrderItemId = orderItem.Id;
+                    firstQrCode.Used = true;
+                    _sunworldQrCodeService.Update(firstQrCode);
+                }
                 //gift cards
                 AddGiftCards(product, sc.AttributesXml, sc.Quantity, orderItem, scUnitPriceExclTax);
 

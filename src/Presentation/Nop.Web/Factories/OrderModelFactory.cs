@@ -16,6 +16,7 @@ using Nop.Services.Helpers;
 using Nop.Services.Localization;
 using Nop.Services.Orders;
 using Nop.Services.Payments;
+using Nop.Services.QrCodes;
 using Nop.Services.Seo;
 using Nop.Services.Shipping;
 using Nop.Services.Vendors;
@@ -60,7 +61,7 @@ namespace Nop.Web.Factories
         private readonly ShippingSettings _shippingSettings;
         private readonly TaxSettings _taxSettings;
         private readonly VendorSettings _vendorSettings;
-
+        private readonly ISunworldQrCodeService _sunworldQrCodeService;
         #endregion
 
         #region Ctor
@@ -93,7 +94,7 @@ namespace Nop.Web.Factories
             RewardPointsSettings rewardPointsSettings,
             ShippingSettings shippingSettings,
             TaxSettings taxSettings,
-            VendorSettings vendorSettings)
+            VendorSettings vendorSettings, ISunworldQrCodeService sunworldQrCodeService)
         {
             _addressSettings = addressSettings;
             _catalogSettings = catalogSettings;
@@ -124,6 +125,7 @@ namespace Nop.Web.Factories
             _shippingSettings = shippingSettings;
             _taxSettings = taxSettings;
             _vendorSettings = vendorSettings;
+            _sunworldQrCodeService = sunworldQrCodeService;
         }
 
         #endregion
@@ -465,6 +467,13 @@ namespace Nop.Web.Factories
                     orderItemModel.DownloadId = product.DownloadId;
                 if (_orderService.IsLicenseDownloadAllowed(orderItem))
                     orderItemModel.LicenseId = orderItem.LicenseDownloadId ?? 0;
+
+                //Get sunworld Qr Code
+                var sunworldQrCode = _sunworldQrCodeService.GetByOrderItemId(orderItem.Id);
+                if (sunworldQrCode != null)
+                {
+                    orderItemModel.SunworldQrCode = QrCodeHelper.GenerateQrCodeBytes(sunworldQrCode.BarCode);
+                }
             }
 
             return model;

@@ -100,6 +100,8 @@ namespace Nop.Web.Models.Order
             //downloadable product properties
             public int DownloadId { get; set; }
             public int LicenseId { get; set; }
+
+            public byte[] SunworldQrCode { get; set; }
         }
 
         public partial class TaxRate : BaseNopModel

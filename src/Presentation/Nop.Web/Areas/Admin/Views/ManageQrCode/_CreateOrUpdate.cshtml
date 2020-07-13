@@ -1,0 +1,59 @@
+﻿@model Nop.Web.Areas.Admin.Models.QrCodes.SunworldQrCodeModel
+
+<nop-panels id="category-panels">
+    <div class="col-lg-6">
+        <div asp-validation-summary="All"></div>
+        <input asp-for="Id" type="hidden" />
+
+        <div class="panel-container">
+            <div class="form-horizontal">
+                <div class="panel-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="BarCode" class="control-label"></label>
+                        <input asp-for="BarCode" class="form-control" />
+                        <span asp-validation-for="BarCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="Used" /> @Html.DisplayNameFor(model => model.Used)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrderItemId" class="control-label"></label>
+                        <input asp-for="OrderItemId" class="form-control" />
+                        <span asp-validation-for="OrderItemId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SunworldProductName" class="control-label"></label>
+                        <input asp-for="SunworldProductName" class="form-control" />
+                        <span asp-validation-for="SunworldProductName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TransactionFiscal" class="control-label"></label>
+                        <input asp-for="TransactionFiscal" class="form-control" />
+                        <span asp-validation-for="TransactionFiscal" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Transaction" class="control-label"></label>
+                        <input asp-for="Transaction" class="form-control" />
+                        <span asp-validation-for="Transaction" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TransactionTDSSN" class="control-label"></label>
+                        <input asp-for="TransactionTDSSN" class="form-control" />
+                        <span asp-validation-for="TransactionTDSSN" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</nop-panels>

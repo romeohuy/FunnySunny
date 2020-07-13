@@ -16,5 +16,7 @@ namespace Nop.Services.QrCodes
         void Update(SunworldQrCode model);
         void Delete(int id);
         IList<SunworldQrCode> ImportFromExcel(string filePath);
+        SunworldQrCode GetAvaliableSunworldQrCode();
+        SunworldQrCode GetByOrderItemId(int orderItemId);
     }
 }

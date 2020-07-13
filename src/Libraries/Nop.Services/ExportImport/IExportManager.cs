@@ -4,6 +4,7 @@ using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Directory;
 using Nop.Core.Domain.Messages;
 using Nop.Core.Domain.Orders;
+using Nop.Core.Domain.QrCodes;
 
 namespace Nop.Services.ExportImport
 {
@@ -36,6 +37,8 @@ namespace Nop.Services.ExportImport
         /// </summary>
         /// <param name="categories">Categories</param>
         byte[] ExportCategoriesToXlsx(IList<Category> categories);
+
+        byte[] ExportQrCodeToXlsx(IList<SunworldQrCode> sunworldQrCodes);
 
         /// <summary>
         /// Export product list to XML

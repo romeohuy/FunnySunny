@@ -10,6 +10,7 @@ using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Directory;
 using Nop.Core.Domain.Media;
 using Nop.Core.Domain.Messages;
+using Nop.Core.Domain.QrCodes;
 using Nop.Core.Domain.Shipping;
 using Nop.Core.Domain.Tax;
 using Nop.Core.Domain.Vendors;
@@ -23,6 +24,7 @@ using Nop.Services.Localization;
 using Nop.Services.Logging;
 using Nop.Services.Media;
 using Nop.Services.Messages;
+using Nop.Services.QrCodes;
 using Nop.Services.Seo;
 using Nop.Services.Shipping;
 using Nop.Services.Shipping.Date;
@@ -81,6 +83,7 @@ namespace Nop.Services.ExportImport
         private readonly MediaSettings _mediaSettings;
         private readonly VendorSettings _vendorSettings;
 
+        private readonly ISunworldQrCodeService _sunworldQrCodeService;
         #endregion
 
         #region Ctor
@@ -115,7 +118,7 @@ namespace Nop.Services.ExportImport
             IVendorService vendorService,
             IWorkContext workContext,
             MediaSettings mediaSettings,
-            VendorSettings vendorSettings)
+            VendorSettings vendorSettings, ISunworldQrCodeService sunworldQrCodeService)
         {
             _catalogSettings = catalogSettings;
             _categoryService = categoryService;
@@ -148,6 +151,7 @@ namespace Nop.Services.ExportImport
             _workContext = workContext;
             _mediaSettings = mediaSettings;
             _vendorSettings = vendorSettings;
+            _sunworldQrCodeService = sunworldQrCodeService;
         }
 
         #endregion
@@ -2146,6 +2150,69 @@ namespace Nop.Services.ExportImport
             throw new ArgumentException(string.Format(_localizationService.GetResource("Admin.Catalog.Categories.Import.CategoriesArentImported"), string.Join(", ", caregoriesName)));
         }
 
+        public void ImportQrCodesFromXlsx(Stream stream)
+        {
+            using var xlPackage = new ExcelPackage(stream);
+            // get the first worksheet in the workbook
+            var worksheet = xlPackage.Workbook.Worksheets.FirstOrDefault();
+            if (worksheet == null)
+                throw new NopException("No worksheet found");
+            var allQrCodes = _sunworldQrCodeService.GetAll();
+            //the columns
+            var properties = GetPropertiesByExcelCells<SunworldQrCode>(worksheet);
+
+            var manager = new PropertyManager<SunworldQrCode>(properties, _catalogSettings);
+            var iRow = 2;
+            while (true)
+            {
+                var allColumnsAreEmpty = manager.GetProperties
+                    .Select(property => worksheet.Cells[iRow, property.PropertyOrderPosition])
+                    .All(cell => string.IsNullOrEmpty(cell?.Value?.ToString()));
+
+                if (allColumnsAreEmpty)
+                    break;
+
+                var sunworldQrCode = GetQrCodeFromXlsx(manager, worksheet, iRow, allQrCodes.ToList(), out var isNew);
+                if (isNew)
+                {
+                    _sunworldQrCodeService.Insert(sunworldQrCode);
+                }
+                iRow++;
+            }
+
+        }
+
+        protected virtual SunworldQrCode GetQrCodeFromXlsx(PropertyManager<SunworldQrCode> manager, ExcelWorksheet worksheet, int iRow, List<SunworldQrCode> allSunworldQrCodes, out bool isNew)
+        {
+            manager.ReadFromXlsx(worksheet, iRow);
+
+            //try get category from database by ID
+            var sunworldQrCode = allSunworldQrCodes.FirstOrDefault(c => c.Id == manager.GetProperty("Id")?.IntValue);
+
+            if (sunworldQrCode == null)
+            {
+                var barCode = manager.GetProperty("BarCode").StringValue;
+                if (!string.IsNullOrEmpty(barCode))
+                {
+                    sunworldQrCode = allSunworldQrCodes.Any(qr => qr.BarCode == barCode)
+                        ? allSunworldQrCodes.FirstOrDefault(_=>_.BarCode == barCode)
+                        : null;
+                }
+            }
+
+            isNew = sunworldQrCode == null;
+
+            sunworldQrCode ??= new SunworldQrCode();
+
+
+            if (isNew)
+            {
+                sunworldQrCode.BarCode = manager.GetProperty("BarCode").StringValue;
+                
+            }
+
+            return sunworldQrCode;
+        }
         #endregion
 
         #region Nested classes

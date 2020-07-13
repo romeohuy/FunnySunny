@@ -14,6 +14,7 @@ using Nop.Core.Domain.Forums;
 using Nop.Core.Domain.Gdpr;
 using Nop.Core.Domain.Messages;
 using Nop.Core.Domain.Orders;
+using Nop.Core.Domain.QrCodes;
 using Nop.Core.Domain.Shipping;
 using Nop.Core.Domain.Tax;
 using Nop.Core.Domain.Vendors;
@@ -30,6 +31,7 @@ using Nop.Services.Localization;
 using Nop.Services.Media;
 using Nop.Services.Messages;
 using Nop.Services.Orders;
+using Nop.Services.QrCodes;
 using Nop.Services.Seo;
 using Nop.Services.Shipping;
 using Nop.Services.Shipping.Date;
@@ -86,6 +88,7 @@ namespace Nop.Services.ExportImport
         private readonly OrderSettings _orderSettings;
         private readonly ProductEditorSettings _productEditorSettings;
 
+        private readonly ISunworldQrCodeService _sunworldQrCodeService;
         #endregion
 
         #region Ctor
@@ -127,7 +130,7 @@ namespace Nop.Services.ExportImport
             IVendorService vendorService,
             IWorkContext workContext,
             OrderSettings orderSettings,
-            ProductEditorSettings productEditorSettings)
+            ProductEditorSettings productEditorSettings, ISunworldQrCodeService sunworldQrCodeService)
         {
             _addressSettings = addressSettings;
             _catalogSettings = catalogSettings;
@@ -167,6 +170,7 @@ namespace Nop.Services.ExportImport
             _workContext = workContext;
             _orderSettings = orderSettings;
             _productEditorSettings = productEditorSettings;
+            _sunworldQrCodeService = sunworldQrCodeService;
         }
 
         #endregion
@@ -872,6 +876,26 @@ namespace Nop.Services.ExportImport
             }, _catalogSettings);
 
             return manager.ExportToXlsx(categories);
+        }
+
+        public byte[] ExportQrCodeToXlsx(IList<SunworldQrCode> sunworldQrCodes)
+        {
+            var allQrCodes = _sunworldQrCodeService.GetAll();
+            //property manager 
+            var manager = new PropertyManager<SunworldQrCode>(new[]
+            {
+                new PropertyByName<SunworldQrCode>("Id", p => p.Id),
+                new PropertyByName<SunworldQrCode>("OrderItemId", p => p.OrderItemId, IgnoreExportCategoryProperty()),
+                new PropertyByName<SunworldQrCode>("BarCode", p => p.BarCode),
+                new PropertyByName<SunworldQrCode>("SunworldProductName", p => p.SunworldProductName),
+                new PropertyByName<SunworldQrCode>("Transaction", p => p.Transaction),
+                new PropertyByName<SunworldQrCode>("TransactionFiscal", p => p.TransactionFiscal),
+                new PropertyByName<SunworldQrCode>("TransactionTDSSN", p => p.TransactionTDSSN),
+                new PropertyByName<SunworldQrCode>("Used", p => p.Used),
+                new PropertyByName<SunworldQrCode>("Description", p => p.Description)
+            }, _catalogSettings);
+
+            return manager.ExportToXlsx(allQrCodes);
         }
 
         /// <summary>
